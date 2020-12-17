@@ -31,19 +31,18 @@ export async function getAgilityPageProps({ context, res }) {
 		isDevelopmentMode
 	});
 
-
 	//always sync to get latest
-
 	console.log(`Agility CMS => Syncing ${isPreview ? "Preview" : "Live"} Mode`)
 	if (! agilitySyncClient) {
 		console.log("Agility CMS => Sync client could not be accessed.")
 		return {notFound: true};
 	}
+
 	await agilitySyncClient.runSync();
 
+	let syncState = await agilitySyncClient.store.getSyncState(agilityConfig.languageCode)
 
-
-	console.log(`Agility CMS => Getting page props for '${path}'...`);
+	console.log(`Agility CMS => Getting page props for '${path}'...`, syncState);
 
 
 
@@ -154,6 +153,7 @@ export async function getAgilityPageProps({ context, res }) {
 	const globalFooterProps = await GlobalFooter.getCustomInitialProps({ agility: agilitySyncClient.store, languageCode: languageCode, channelName: channelName });
 
 	return {
+		syncState,
 		sitemapNode: pageInSitemap,
 		page,
 		dynamicPageItem,

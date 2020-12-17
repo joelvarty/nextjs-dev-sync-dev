@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import dynamic from 'next/dynamic'
 
 
- function ContentZone({ name, page, dynamicPageItem }) {
+ function ContentZone({ name, page, dynamicPageItem, syncState }) {
 	function RenderModules() {
 
 		let modules = page.zones[name];
@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic'
 
 			let AgilityModule = dynamic(() => import('components/agility-modules/' + m.moduleName + '.js'))
 
-			return <AgilityModule key={m.item.contentID} page={page} dynamicPageItem={dynamicPageItem} {...m.item} />
+			return <AgilityModule syncState={syncState} key={m.item.contentID} page={page} dynamicPageItem={dynamicPageItem} {...m.item} />
 		})
 
 		return modulesToRender;
