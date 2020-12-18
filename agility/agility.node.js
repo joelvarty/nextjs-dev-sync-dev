@@ -42,7 +42,7 @@ export async function getAgilityPageProps({ context, res }) {
 
 	let syncState = await agilitySyncClient.store.getSyncState(agilityConfig.languageCode)
 
-	console.log(`Agility CMS => Getting page props for '${path}'...`, syncState);
+	console.log(`Agility CMS => Getting page props for '${path}'...`);
 
 
 
